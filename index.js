@@ -3,15 +3,16 @@ const app = express();
 const compression = require("compression");
 const db = require("./db");
 const cookieSession = require("cookie-session");
-// var csurf = require("csurf");
+var csurf = require("csurf");
 
 app.use(compression());
 
-app.use(
-    require("body-parser").urlencoded({
-        extended: false
-    })
-);
+// app.use(
+//     require("body-parser").urlencoded({
+//         extended: false
+//     })
+// );
+app.use(require("body-parser").json());
 
 app.use(
     cookieSession({
@@ -19,7 +20,13 @@ app.use(
         maxAge: 1000 * 60 * 60 * 24 * 14
     })
 );
-// app.use(csurf());
+
+app.use(csurf());
+
+app.use(function(req, res, next) {
+    res.cookie("mytoken", req.csrfToken());
+    next();
+});
 
 if (process.env.NODE_ENV != "production") {
     app.use(
@@ -32,24 +39,31 @@ if (process.env.NODE_ENV != "production") {
     app.use("/bundle.js", (req, res) => res.sendFile(`${__dirname}/bundle.js`));
 }
 
-app.get("*", function(req, res) {
-    res.sendFile(__dirname + "/index.html");
-});
-
 app.post("/register", (req, res) => {
     console.log(req.body);
-    hashPassword(req.body.password).then(hash => {
-        db.addUser(req.body.firstname, req.body.lastname, req.body.email, hash)
-            .then(() => {
-                res.status(200);
-                res.end();
-            })
-            .catch(err => {
-                res.status(500);
-                res.end();
-                console.log("err in addUser: ", err);
-            });
-    });
+    hashPassword(req.body.password)
+        .then(hash => {
+            db.addUser(
+                req.body.firstname,
+                req.body.lastname,
+                req.body.email,
+                hash
+            )
+                .then(() => {
+                    res.status(200);
+                    res.end();
+                })
+                .catch(err => {
+                    res.status(500);
+                    res.end("An error occured. Please try again.");
+                    console.log("err in addUser: ", err);
+                });
+        })
+        .catch(err => {
+            res.status(500);
+            res.end("An error occured. Please try again.");
+            console.log("err in addUser: ", err);
+        });
 });
 
 app.post("/login", (req, res) => {
@@ -69,17 +83,17 @@ app.post("/login", (req, res) => {
                     })
                     .catch(() => {
                         res.status(401);
-                        res.end();
+                        res.end("Invalid email or password. Please try again.");
                     });
             } else {
                 res.status(401);
-                res.end();
+                res.end("Invalid email or password. Please try again.");
             }
         })
         .catch(err => {
             console.log(err);
             res.status(500);
-            res.end();
+            res.end("An error occured. Please try again.");
         });
 });
 
@@ -115,6 +129,9 @@ function checkPassword(textEnteredInLoginForm, hashedPasswordFromDatabase) {
         );
     });
 }
+app.get("*", function(req, res) {
+    res.sendFile(__dirname + "/index.html");
+});
 
 module.exports = app;
 if (require.main == module) {
