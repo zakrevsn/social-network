@@ -3,12 +3,13 @@ import ReactDOM from "react-dom";
 import { HashRouter, Route } from "react-router-dom";
 import Login from "./login";
 import Welcome from "./welcome";
+import App from "./app";
 
 let elem;
 if (location.pathname == "/welcome") {
     elem = <Welcome />;
 } else {
-    elem = <img src="/images/logo.png" />;
+    elem = <App />;
 }
 export default function Logo() {
     return (
