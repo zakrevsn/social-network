@@ -1,0 +1,73 @@
+body {
+    background-color: purple;
+    padding: 0;
+    margin: 0;
+}
+
+.logo {
+    float: left;
+}
+
+.logo img {
+    height: 100px;
+    width: 175px;
+}
+
+.site-header {
+    background-color: white;
+    width: 100%;
+    margin: 0;
+    margin-bottom: 5px;
+}
+.profilepic {
+    float: right;
+    height: 200px;
+    width: 150px;
+}
+
+.popup {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.5);
+    /* background-color: white; */
+}
+
+.popup-content {
+    position: absolute;
+    margin: 50px;
+    width: 80%;
+    height: 80%;
+    background-color: white;
+    padding: 15px;
+    border-radius: 10px;
+    text-align: center;
+    overflow-y: scroll;
+}
+
+.popup-x {
+    display: fixed;
+    top: 5px;
+    right: 5px;
+    /* width: 100%; */
+    text-align: right;
+    cursor: pointer;
+}
+
+@media screen and (max-width: 480px) {
+    input {
+        display: block;
+        width: 90%;
+    }
+
+    body {
+        padding: 0px;
+    }
+
+    .popup-content {
+        width: auto;
+        margin: 0;
+    }
+}

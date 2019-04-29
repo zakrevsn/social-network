@@ -16,3 +16,8 @@ exports.getUser = function getUser(email) {
     let params = [email];
     return db.query(q, params);
 };
+exports.setProfilepic = function setProfilepic(image, userId) {
+    let q = `UPDATE users SET profilepic = $1 WHERE id = $2 RETURNING *`;
+    let params = [image, userId];
+    return db.query(q, params);
+};

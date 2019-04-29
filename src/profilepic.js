@@ -8,9 +8,10 @@ export default function ProfilePic({
 }) {
     return (
         <img
+            className="profilepic"
             alt={firstname + " " + lastname}
             onClick={clickHandler}
-            src={image || "/default.jpg"}
+            src={image || "/default.png"}
         />
     );
 }

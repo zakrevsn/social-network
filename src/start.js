@@ -1,7 +1,5 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import { HashRouter, Route } from "react-router-dom";
-import Login from "./login";
 import Welcome from "./welcome";
 import App from "./app";
 
@@ -14,9 +12,15 @@ if (location.pathname == "/welcome") {
 export default function Logo() {
     return (
         <div className="logo">
-            <img src="/images/logo.png" />
+            <img src="/logo.jpg" />
         </div>
     );
 }
 
-ReactDOM.render(elem, document.querySelector("main"));
+ReactDOM.render(
+    <div>
+        <h1 className="site-header">Secret society</h1>
+        {elem}
+    </div>,
+    document.querySelector("main")
+);

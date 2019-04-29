@@ -3,7 +3,30 @@ const app = express();
 const compression = require("compression");
 const db = require("./db");
 const cookieSession = require("cookie-session");
-var csurf = require("csurf");
+const csurf = require("csurf");
+const s3 = require("./s3");
+const multer = require("multer");
+const uidSafe = require("uid-safe");
+const path = require("path");
+const config = require("./config");
+
+const diskStorage = multer.diskStorage({
+    destination: function(req, file, callback) {
+        callback(null, __dirname + "/uploads");
+    },
+    filename: function(req, file, callback) {
+        uidSafe(24).then(function(uid) {
+            callback(null, uid + path.extname(file.originalname));
+        });
+    }
+});
+
+const uploader = multer({
+    storage: diskStorage,
+    limits: {
+        fileSize: 2097152
+    }
+});
 
 app.use(compression());
 
@@ -13,6 +36,7 @@ app.use(compression());
 //     })
 // );
 app.use(require("body-parser").json());
+app.use(express.static("./public"));
 
 app.use(
     cookieSession({
@@ -76,6 +100,7 @@ app.post("/login", (req, res) => {
                         req.session.lastname = results.rows[0].lastname;
                         req.session.email = results.rows[0].email;
                         req.session.userId = results.rows[0].id;
+                        req.session.profilepic = results.rows[0].profilepic;
 
                         console.log("finishing login", req.session);
                         res.status(200);
@@ -94,6 +119,22 @@ app.post("/login", (req, res) => {
             console.log(err);
             res.status(500);
             res.end("An error occured. Please try again.");
+        });
+});
+
+app.post("/profilepic", [uploader.single("file"), s3.upload], function(
+    req,
+    res
+) {
+    // If nothing went wrong the file is already in the uploads directory
+    // console.log("req.file", req.file);
+    db.setProfilepic(config.s3Url + req.file.filename, req.session.userId)
+        .then(results => {
+            req.session.profilepic = results.rows[0].profilepic;
+            res.json(results.rows);
+        })
+        .catch(() => {
+            res.sendStatus(500);
         });
 });
 
@@ -129,6 +170,16 @@ function checkPassword(textEnteredInLoginForm, hashedPasswordFromDatabase) {
         );
     });
 }
+
+app.get("/user", function(req, res) {
+    res.json({
+        firstname: req.session.firstname,
+        lastname: req.session.lastname,
+        id: req.session.userId,
+        profilepic: req.session.profilepic
+    });
+});
+
 app.get("*", function(req, res) {
     res.sendFile(__dirname + "/index.html");
 });
