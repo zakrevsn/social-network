@@ -3,6 +3,9 @@ body {
     padding: 0;
     margin: 0;
 }
+main {
+    padding: 10px;
+}
 
 .logo {
     float: left;
@@ -12,17 +15,28 @@ body {
     height: 100px;
     width: 175px;
 }
-
+hr {
+    clear: both;
+}
 .site-header {
-    background-color: white;
+    background-color: lightgrey;
     width: 100%;
     margin: 0;
     margin-bottom: 5px;
 }
 .profilepic {
     float: right;
-    height: 200px;
-    width: 150px;
+    height: 100px;
+    width: 100px;
+}
+.profile .profilepic {
+    float: left;
+    height: 300px;
+    width: 300px;
+}
+.profile .name {
+    font-size: 50px;
+    margin-right: 20px;
 }
 
 .popup {

@@ -3,6 +3,8 @@ import axios from "./axios";
 import ProfilePic from "./profilepic";
 import Logo from "./start";
 import Uploader from "./uploader";
+import Profile from "./profile";
+import BroserRouter from "react";
 export default class App extends React.Component {
     setProfilepic(url) {
         this.setState({ profilepic: url });
@@ -52,6 +54,15 @@ export default class App extends React.Component {
                         setProfilepic={this.setProfilepic}
                     />
                 )}
+                <hr />
+                <Profile
+                    image={this.state.profilepic}
+                    firstname={this.state.firstname}
+                    lastname={this.state.lastname}
+                    clickHandler={() =>
+                        this.setState({ isUploaderVisible: true })
+                    }
+                />
             </div>
         );
     }

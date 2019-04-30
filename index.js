@@ -180,6 +180,13 @@ app.get("/user", function(req, res) {
     });
 });
 
+// intead of jon can be anything else - route for others profile;
+// app.get("/user/:id.json", function(req, res) {
+// if ((req.params.id = req.session.userId)) {
+//     req.json;
+// }
+// }
+
 app.get("*", function(req, res) {
     res.sendFile(__dirname + "/index.html");
 });
