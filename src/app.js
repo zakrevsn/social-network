@@ -4,10 +4,16 @@ import ProfilePic from "./profilepic";
 import Logo from "./start";
 import Uploader from "./uploader";
 import Profile from "./profile";
-import BroserRouter from "react";
+// import BrowserRouter from "react";
+import { Route, BrowserRouter } from "react-router-dom";
+import OtherProfile from "./otherprofile";
+import BioEditor from "./bioeditor";
 export default class App extends React.Component {
     setProfilepic(url) {
         this.setState({ profilepic: url });
+    }
+    setBio(bio) {
+        this.setState({ bio: bio });
     }
 
     closeUpload() {
@@ -38,32 +44,51 @@ export default class App extends React.Component {
             );
         }
         return (
-            <div>
-                <Logo />
-                <ProfilePic
-                    image={this.state.profilepic}
-                    firstname={this.state.firstname}
-                    lastname={this.state.lastname}
-                    clickHandler={() =>
-                        this.setState({ isUploaderVisible: true })
-                    }
-                />
-                {this.state.isUploaderVisible && (
-                    <Uploader
-                        closeUpload={this.closeUpload}
-                        setProfilepic={this.setProfilepic}
+            <BrowserRouter>
+                <div>
+                    <Logo />
+                    <ProfilePic
+                        image={this.state.profilepic}
+                        firstname={this.state.firstname}
+                        lastname={this.state.lastname}
+                        clickHandler={() =>
+                            this.setState({ isUploaderVisible: true })
+                        }
                     />
-                )}
-                <hr />
-                <Profile
-                    image={this.state.profilepic}
-                    firstname={this.state.firstname}
-                    lastname={this.state.lastname}
-                    clickHandler={() =>
-                        this.setState({ isUploaderVisible: true })
-                    }
-                />
-            </div>
+                    {this.state.isUploaderVisible && (
+                        <Uploader
+                            closeUpload={this.closeUpload}
+                            setProfilepic={this.setProfilepic}
+                        />
+                    )}
+                    <hr />
+
+                    <Route
+                        path="/"
+                        render={() => {
+                            return (
+                                <Profile
+                                    image={this.state.profilepic}
+                                    firstname={this.state.firstname}
+                                    lastname={this.state.lastname}
+                                    clickHandler={() =>
+                                        this.setState({
+                                            isUploaderVisible: true
+                                        })
+                                    }
+                                    bioEditor={
+                                        <BioEditor
+                                            bio={this.state.bio}
+                                            setBio={this.setBio}
+                                        />
+                                    }
+                                />
+                            );
+                        }}
+                    />
+                    <Route path="/user/:id" component={OtherProfile} />
+                </div>
+            </BrowserRouter>
         );
     }
 }

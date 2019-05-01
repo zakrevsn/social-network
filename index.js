@@ -89,6 +89,18 @@ app.post("/register", (req, res) => {
             console.log("err in addUser: ", err);
         });
 });
+app.post("/bio", (req, res) => {
+    db.updateBio(req.body.bio, req.session.userId)
+        .then(results => {
+            req.session.bio = results.rows[0].bio;
+            res.json(results.rows);
+        })
+        .catch(err => {
+            res.status(500);
+            res.end("An error occured. Please try again.");
+            console.log("err in updateBio: ", err);
+        });
+});
 
 app.post("/login", (req, res) => {
     db.getUser(req.body.email)
@@ -101,6 +113,7 @@ app.post("/login", (req, res) => {
                         req.session.email = results.rows[0].email;
                         req.session.userId = results.rows[0].id;
                         req.session.profilepic = results.rows[0].profilepic;
+                        req.session.bio = results.rows[0].bio;
 
                         console.log("finishing login", req.session);
                         res.status(200);
@@ -176,7 +189,8 @@ app.get("/user", function(req, res) {
         firstname: req.session.firstname,
         lastname: req.session.lastname,
         id: req.session.userId,
-        profilepic: req.session.profilepic
+        profilepic: req.session.profilepic,
+        bio: req.session.bio
     });
 });
 

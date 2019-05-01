@@ -1,10 +1,12 @@
-class OtherProfile extends React.Component {
+import React from "react";
+import axios from "./axios";
+export default class OtherProfile extends React.Component {
     componentDidMount() {
-        const id = this.prop.match.params.id;
-    }
-    // axios.get('/user/ + id').then({data}) => {
-    //     if (data.redirect) {
-    //         this.props.history.push('/');
-    //     }
+        const id = this.props.match.params.id;
+        axios.get("/user/" + id).then(({ data }) => {
+            if (data.redirect) {
+                this.props.history.push("/");
+            }
+        });
     }
 }

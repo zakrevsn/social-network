@@ -6,5 +6,5 @@ import test from "test";
 import ProfilePic from "/.profilepic";
 
 test('Passed url makes into src', () => {
-    const wrapper = shallow(,ProfilePic url="any.jpg")
+    const wrapper = shallow(ProfilePic url="any.jpg")
 })

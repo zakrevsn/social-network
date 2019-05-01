@@ -6,5 +6,6 @@ CREATE TABLE users(
     lastname VARCHAR(250) NOT NULL CHECK (lastname!=''),
     email TEXT NOT NULL UNIQUE CHECK (email!=''),
     password VARCHAR(250) NOT NULL CHECK (password!=''),
-    profilepic VARCHAR(250) CHECK (profilepic!='')
+    profilepic VARCHAR(250) CHECK (profilepic!=''),
+    bio TEXT
 );

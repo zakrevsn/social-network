@@ -21,3 +21,8 @@ exports.setProfilepic = function setProfilepic(image, userId) {
     let params = [image, userId];
     return db.query(q, params);
 };
+exports.updateBio = function updateBio(bio, userId) {
+    let q = `UPDATE users SET bio = $1 WHERE id = $2 RETURNING *`;
+    let params = [bio, userId];
+    return db.query(q, params);
+};
