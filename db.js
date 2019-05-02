@@ -26,3 +26,8 @@ exports.updateBio = function updateBio(bio, userId) {
     let params = [bio, userId];
     return db.query(q, params);
 };
+exports.getOtherUser = function getOtherUser(userId) {
+    let q = `SELECT firstname, lastname, profilepic, bio FROM users WHERE id=$1`;
+    let params = [userId];
+    return db.query(q, params);
+};

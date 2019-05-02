@@ -6,10 +6,10 @@ import Registration from "./register";
 export default function Welcome() {
     return (
         <div>
-            <div>Welcome</div>
+            <div className="welcome">Welcome</div>
             <Logo />
             <HashRouter>
-                <div>
+                <div className="link">
                     <Route exact path="/" component={Registration} />
                     <Route path="/login" component={Login} />
                 </div>

@@ -27,9 +27,6 @@ export default class App extends React.Component {
     }
     componentDidMount() {
         axios.get("/user").then(({ data }) => {
-            // this.setState({
-            //     ...data
-            // });
             this.setState(data);
             console.log(data);
         });
@@ -46,24 +43,25 @@ export default class App extends React.Component {
         return (
             <BrowserRouter>
                 <div>
-                    <Logo />
-                    <ProfilePic
-                        image={this.state.profilepic}
-                        firstname={this.state.firstname}
-                        lastname={this.state.lastname}
-                        clickHandler={() =>
-                            this.setState({ isUploaderVisible: true })
-                        }
-                    />
-                    {this.state.isUploaderVisible && (
-                        <Uploader
-                            closeUpload={this.closeUpload}
-                            setProfilepic={this.setProfilepic}
+                    <div className="top">
+                        <Logo />
+                        <ProfilePic
+                            image={this.state.profilepic}
+                            firstname={this.state.firstname}
+                            lastname={this.state.lastname}
+                            clickHandler={() =>
+                                this.setState({ isUploaderVisible: true })
+                            }
                         />
-                    )}
-                    <hr />
-
+                        {this.state.isUploaderVisible && (
+                            <Uploader
+                                closeUpload={this.closeUpload}
+                                setProfilepic={this.setProfilepic}
+                            />
+                        )}
+                    </div>
                     <Route
+                        exact
                         path="/"
                         render={() => {
                             return (
@@ -86,7 +84,16 @@ export default class App extends React.Component {
                             );
                         }}
                     />
-                    <Route path="/user/:id" component={OtherProfile} />
+                    <Route
+                        path="/user/:id"
+                        render={props => (
+                            <OtherProfile
+                                key={props.match.url}
+                                match={props.match}
+                                history={props.history}
+                            />
+                        )}
+                    />
                 </div>
             </BrowserRouter>
         );

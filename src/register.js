@@ -47,7 +47,7 @@ export default class Registration extends React.Component {
                     />
                 </div>
                 <div id="button">
-                    <button onClick={this.register} id="register">
+                    <button onClick={this.register} id="registerbot">
                         REGISTER
                     </button>
                 </div>

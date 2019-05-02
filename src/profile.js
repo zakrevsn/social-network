@@ -21,10 +21,12 @@ export default class Profile extends React.Component {
                     lastname={this.props.lastname}
                     clickHandler={this.props.clickHandler}
                 />
-                <div className="name">
-                    {this.props.firstname} {this.props.lastname}
+                <div className="wrapper">
+                    <div className="name">
+                        {this.props.firstname} {this.props.lastname}
+                    </div>
+                    {this.props.bioEditor}
                 </div>
-                {this.props.bioEditor}
             </div>
         );
     }

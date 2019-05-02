@@ -1,12 +1,22 @@
 body {
-    background-color: purple;
+    background-image: url("/background.jpg");
+    background-repeat: no-repeat;
+    background-size: 100% auto;
     padding: 0;
     margin: 0;
+    /* background-color: rgba(0, 0, 128, 0.5); */
 }
 main {
     padding: 10px;
 }
-
+.top {
+    display: flex;
+    justify-content: space-between;
+    background-color: rgba(176, 196, 222, 0.75);
+    /* background-color: rgba(244, 164, 96, 0.85); */
+    border-bottom: 10px solid rgba(205, 133, 63, 0.5);
+    /* rgba(244, 164, 96, 0.85); */
+}
 .logo {
     float: left;
 }
@@ -15,28 +25,66 @@ main {
     height: 100px;
     width: 175px;
 }
+.welcome {
+    color: black;
+    font-size: 30px;
+    background-color: rgba(176, 196, 222, 0.75);
+}
+.link {
+    font-size: 20px;
+    /* background-color: rgba(244, 164, 96, 0.85); */
+    background-color: rgba(205, 133, 63, 0.5);
+    height: 120px;
+}
 hr {
     clear: both;
 }
+input {
+    height: 30px;
+    width: 175px;
+}
+/* #registerbot {
+    height: 25px;
+    width: 70px;
+} */
+#login,
+#register {
+    height: 20px;
+    width: 70px;
+}
+
 .site-header {
-    background-color: lightgrey;
+    background-color: rgba(0, 0, 128, 0.5);
     width: 100%;
     margin: 0;
     margin-bottom: 5px;
+    color: lightgrey;
+}
+.profile {
+    display: flex;
 }
 .profilepic {
-    float: right;
+    /* float: right; */
     height: 100px;
     width: 100px;
+    /* background-color: rgba(176, 196, 222, 0.5); */
 }
 .profile .profilepic {
-    float: left;
+    /* float: left; */
     height: 300px;
     width: 300px;
 }
+.wrapper {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+    width: 100vw;
+}
 .profile .name {
     font-size: 50px;
-    margin-right: 20px;
+    /* margin-right: 20px; */
+    background-color: rgba(0, 0, 128, 0.5);
+    color: lightgrey;
 }
 
 .popup {
@@ -68,6 +116,18 @@ hr {
     /* width: 100%; */
     text-align: right;
     cursor: pointer;
+}
+.bio {
+    height: 100px;
+    font-size: 30px;
+    /* display: inline; */
+}
+.bio a {
+    font-size: 20px;
+    color: white;
+}
+.biotext {
+    background-color: lightgrey;
 }
 
 @media screen and (max-width: 480px) {

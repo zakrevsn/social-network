@@ -194,6 +194,27 @@ app.get("/user", function(req, res) {
     });
 });
 
+app.get("/user/:id.json", (req, res) => {
+    if (req.params.id == req.session.userId) {
+        return res.json({
+            redirect: true
+        });
+    }
+    db.getOtherUser(req.params.id)
+        .then(results => {
+            res.json({
+                firstname: results.rows[0].firstname,
+                lastname: results.rows[0].lastname,
+                profilepic: results.rows[0].profilepic,
+                bio: results.rows[0].bio
+            });
+        })
+        .catch(() => {
+            res.status(500);
+            res.end();
+        });
+});
+
 // intead of jon can be anything else - route for others profile;
 // app.get("/user/:id.json", function(req, res) {
 // if ((req.params.id = req.session.userId)) {
