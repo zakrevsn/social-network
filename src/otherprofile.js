@@ -1,6 +1,7 @@
 import React from "react";
 import axios from "./axios";
 import ProfilePic from "./profilepic";
+import Friendship from "./friendship";
 export default class OtherProfile extends React.Component {
     constructor(props) {
         super(props);
@@ -33,6 +34,10 @@ export default class OtherProfile extends React.Component {
                         <div className="biotext">{this.state.bio}</div>
                     </div>
                 </div>
+                <Friendship
+                    userId={this.props.userId}
+                    otherUserId={this.props.match.params.id}
+                />
             </div>
         );
     }

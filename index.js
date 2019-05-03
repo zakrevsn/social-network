@@ -215,12 +215,46 @@ app.get("/user/:id.json", (req, res) => {
         });
 });
 
-// intead of jon can be anything else - route for others profile;
-// app.get("/user/:id.json", function(req, res) {
-// if ((req.params.id = req.session.userId)) {
-//     req.json;
-// }
-// }
+app.get("/friendship/:id", (req, res) => {
+    db.getFriendship(req.session.userId, req.params.id)
+        .then(results => {
+            res.json(results.rows[0] || false);
+        })
+        .catch(() => {
+            res.status(500);
+            res.end();
+        });
+});
+app.post("/friendship/:id", (req, res) => {
+    db.insertFriendship(req.session.userId, req.params.id)
+        .then(results => {
+            res.json(results.rows[0]);
+        })
+        .catch(() => {
+            res.status(500);
+            res.end();
+        });
+});
+app.put("/friendship/:id", (req, res) => {
+    db.acceptFriendship(req.session.userId, req.params.id)
+        .then(results => {
+            res.json(results.rows[0]);
+        })
+        .catch(() => {
+            res.status(500);
+            res.end();
+        });
+});
+app.delete("/friendship/:id", (req, res) => {
+    db.deleteFriendship(req.session.userId, req.params.id)
+        .then(results => {
+            res.json(results.rows[0]);
+        })
+        .catch(() => {
+            res.status(500);
+            res.end();
+        });
+});
 
 app.get("*", function(req, res) {
     res.sendFile(__dirname + "/index.html");

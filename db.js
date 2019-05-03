@@ -31,3 +31,33 @@ exports.getOtherUser = function getOtherUser(userId) {
     let params = [userId];
     return db.query(q, params);
 };
+exports.getFriendship = function getOtherUser(userId, otherUserId) {
+    let q = `SELECT *
+    FROM friendship
+    WHERE (sender_id=$1 and recipient_id=$2) or
+    (sender_id=$2 and recipient_id=$1) `;
+    let params = [userId, otherUserId];
+    return db.query(q, params);
+};
+exports.insertFriendship = function insertFriendship(userId, otherUserId) {
+    let q = `INSERT INTO friendship
+    (sender_id, recipient_id) VALUES ($1, $2)
+    RETURNING * `;
+    let params = [userId, otherUserId];
+    return db.query(q, params);
+};
+exports.acceptFriendship = function acceptFriendship(userId, otherUserId) {
+    let q = `UPDATE friendship
+    SET accepted=true
+    WHERE
+    (sender_id=$2 and recipient_id=$1) RETURNING * `;
+    let params = [userId, otherUserId];
+    return db.query(q, params);
+};
+exports.deleteFriendship = function deleteFriendship(userId, otherUserId) {
+    let q = `DELETE FROM friendship
+    WHERE (sender_id=$1 and recipient_id=$2) or
+    (sender_id=$2 and recipient_id=$1) RETURNING * `;
+    let params = [userId, otherUserId];
+    return db.query(q, params);
+};
