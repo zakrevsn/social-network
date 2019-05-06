@@ -31,7 +31,7 @@ exports.getOtherUser = function getOtherUser(userId) {
     let params = [userId];
     return db.query(q, params);
 };
-exports.getFriendship = function getOtherUser(userId, otherUserId) {
+exports.getFriendship = function getFriendship(userId, otherUserId) {
     let q = `SELECT *
     FROM friendship
     WHERE (sender_id=$1 and recipient_id=$2) or
@@ -59,5 +59,17 @@ exports.deleteFriendship = function deleteFriendship(userId, otherUserId) {
     WHERE (sender_id=$1 and recipient_id=$2) or
     (sender_id=$2 and recipient_id=$1) RETURNING * `;
     let params = [userId, otherUserId];
+    return db.query(q, params);
+};
+exports.getFriendsList = function getFriendsList(userId) {
+    let q = `
+        SELECT users.id, firstname, lastname, profilepic, accepted
+        FROM friendship
+        JOIN users
+        ON (accepted = false AND recipient_id = $1 AND sender_id = users.id)
+        OR (accepted = true AND recipient_id = $1 AND sender_id = users.id)
+        OR (accepted = true AND sender_id = $1 AND recipient_id = users.id)
+`;
+    let params = [userId];
     return db.query(q, params);
 };

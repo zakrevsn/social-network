@@ -255,6 +255,16 @@ app.delete("/friendship/:id", (req, res) => {
             res.end();
         });
 });
+app.get("/friendship", (req, res) => {
+    db.getFriendsList(req.session.userId)
+        .then(results => {
+            res.json(results.rows);
+        })
+        .catch(() => {
+            res.status(500);
+            res.end();
+        });
+});
 
 app.get("*", function(req, res) {
     res.sendFile(__dirname + "/index.html");
