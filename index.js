@@ -9,6 +9,10 @@ const multer = require("multer");
 const uidSafe = require("uid-safe");
 const path = require("path");
 const config = require("./config");
+const server = require("http").Server(app);
+const io = require("socket.io")(server, {
+    origins: "localhost:8080 yourfunkychickenapp.herokuapp.com:*"
+});
 
 const diskStorage = multer.diskStorage({
     destination: function(req, file, callback) {
@@ -38,12 +42,15 @@ app.use(compression());
 app.use(require("body-parser").json());
 app.use(express.static("./public"));
 
-app.use(
-    cookieSession({
-        secret: `I'm always hungry.`,
-        maxAge: 1000 * 60 * 60 * 24 * 14
-    })
-);
+const cookieSessionMiddleware = cookieSession({
+    secret: `I'm always hungry.`,
+    maxAge: 1000 * 60 * 60 * 24 * 14
+});
+
+app.use(cookieSessionMiddleware);
+io.use(function(socket, next) {
+    cookieSessionMiddleware(socket.request, socket.request.res, next);
+});
 
 app.use(csurf());
 
@@ -271,11 +278,45 @@ app.get("/friendship", (req, res) => {
         });
 });
 
+let onlineUsers = [];
+io.on("connection", socket => {
+    console.log(socket.request.session);
+    console.log(`socket with the id ${socket.id} is now connected`);
+    let found = false;
+    for (let i in onlineUsers) {
+        if (onlineUsers[i].socketId == socket.id) {
+            found = true;
+        }
+    }
+    socket.emit("onlineUsers", onlineUsers);
+
+    if (found) {
+        return;
+    }
+    onlineUsers.push({
+        socketId: socket.id,
+        userId: socket.request.session.userId,
+        firstname: socket.request.session.firstname,
+        lastname: socket.request.session.lastname,
+        profilepic: socket.request.session.profilepic
+    });
+
+    // socket.on("thanks", function(data) {
+    //     console.log(data);
+    // });
+
+    socket.on("disconnect", function() {
+        console.log(`socket with the id ${socket.id} is now disconnected`);
+    });
+});
+
 app.get("*", function(req, res) {
     res.sendFile(__dirname + "/index.html");
 });
 
 module.exports = app;
 if (require.main == module) {
-    app.listen(process.env.PORT || 8080, () => console.log("I'm listening."));
+    server.listen(process.env.PORT || 8080, () =>
+        console.log("I'm listening.")
+    );
 }
