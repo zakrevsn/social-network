@@ -7,11 +7,13 @@ export default function ProfilePic({
     clickHandler
 }) {
     return (
-        <img
-            className="profilepic"
-            alt={firstname + " " + lastname}
-            onClick={clickHandler}
-            src={image || "/default.png"}
-        />
+        <div className="piccontainer">
+            <img
+                className="profilepic"
+                alt={firstname + " " + lastname}
+                onClick={clickHandler}
+                src={image || "/default.png"}
+            />
+        </div>
     );
 }

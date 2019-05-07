@@ -5,7 +5,7 @@ import Logo from "./start";
 import Uploader from "./uploader";
 import Profile from "./profile";
 // import BrowserRouter from "react";
-import { Route, BrowserRouter } from "react-router-dom";
+import { Route, BrowserRouter, Link } from "react-router-dom";
 import OtherProfile from "./otherprofile";
 import BioEditor from "./bioeditor";
 import Friends from "./friends";
@@ -43,9 +43,18 @@ export default class App extends React.Component {
         }
         return (
             <BrowserRouter>
-                <div>
+                <div className="maindiv">
                     <div className="top">
                         <Logo />
+                        <div className="links">
+                            <a href="/logout">Logout</a>
+                            <a>
+                                <Link to="/friends">Friends</Link>
+                            </a>
+                            <a>
+                                <Link to="/">My profile</Link>
+                            </a>
+                        </div>
                         <ProfilePic
                             image={this.state.profilepic}
                             firstname={this.state.firstname}

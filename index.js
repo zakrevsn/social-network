@@ -63,6 +63,11 @@ if (process.env.NODE_ENV != "production") {
     app.use("/bundle.js", (req, res) => res.sendFile(`${__dirname}/bundle.js`));
 }
 
+app.get("/logout", (req, res) => {
+    req.session = null;
+    res.redirect("/welcome");
+});
+
 app.post("/register", (req, res) => {
     console.log(req.body);
     hashPassword(req.body.password)

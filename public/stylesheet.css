@@ -14,6 +14,16 @@ main {
     background-color: rgba(176, 196, 222, 0.75);
     border-bottom: 10px solid rgba(205, 133, 63, 0.5);
 }
+.links {
+    display: flex;
+    justify-content: space-between;
+    flex-direction: row;
+    width: 100%;
+    align-items: flex-end;
+}
+.links a {
+    display: block;
+}
 .logo {
     float: left;
 }
@@ -40,10 +50,7 @@ input {
     height: 30px;
     width: 175px;
 }
-/* #registerbot {
-    height: 25px;
-    width: 70px;
-} */
+
 #login,
 #register {
     height: 20px;
@@ -61,15 +68,12 @@ input {
     display: flex;
 }
 .profilepic {
-    /* float: right; */
     height: 100px;
     width: 100px;
-    /* background-color: rgba(176, 196, 222, 0.5); */
 }
 .profile .profilepic {
-    /* float: left; */
     height: 300px;
-    width: 300px;
+    width: auto;
 }
 .wrapper {
     display: flex;
@@ -79,7 +83,6 @@ input {
 }
 .profile .name {
     font-size: 50px;
-    /* margin-right: 20px; */
     background-color: rgba(0, 0, 128, 0.5);
     color: lightgrey;
 }
@@ -100,7 +103,6 @@ input {
     width: 100vw;
     height: 100vh;
     background-color: rgba(0, 0, 0, 0.5);
-    /* background-color: white; */
 }
 
 .popup-content {

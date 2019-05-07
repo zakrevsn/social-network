@@ -1,8 +1,8 @@
 import React from "react";
 import ProfilePic from "./profilepic";
-import Friendship from "./friendship";
-import receiveFriends from "./actions";
+import { receiveFriends, acceptRequest, unfriend } from "./actions";
 import { connect } from "react-redux";
+import { Link } from "react-router-dom";
 class Friends extends React.Component {
     constructor(props) {
         super(props);
@@ -19,12 +19,30 @@ class Friends extends React.Component {
             let request = this.props.wannabes[i];
             requests.push(
                 <div key={request.id}>
-                    <ProfilePic
-                        image={request.profilepic}
-                        firstname={request.firstname}
-                        lastname={request.lastname}
-                    />
-                    {request.firstname} {request.lastname}
+                    <Link to={"user/" + request.id}>
+                        <ProfilePic
+                            image={request.profilepic}
+                            firstname={request.firstname}
+                            lastname={request.lastname}
+                        />
+                        {request.firstname} {request.lastname}
+                    </Link>
+                    <button
+                        className="accept"
+                        onClick={() =>
+                            this.props.dispatch(acceptRequest(request.id))
+                        }
+                    >
+                        Accept
+                    </button>
+                    <button
+                        className="decline"
+                        onClick={() =>
+                            this.props.dispatch(unfriend(request.id))
+                        }
+                    >
+                        Decline
+                    </button>
                 </div>
             );
         }
@@ -32,12 +50,20 @@ class Friends extends React.Component {
             let friend = this.props.friends[i];
             friends.push(
                 <div key={friend.id}>
-                    <ProfilePic
-                        image={friend.profilepic}
-                        firstname={friend.firstname}
-                        lastname={friend.lastname}
-                    />
-                    {friend.firstname} {friend.lastname}
+                    <Link to={"user/" + friend.id}>
+                        <ProfilePic
+                            image={friend.profilepic}
+                            firstname={friend.firstname}
+                            lastname={friend.lastname}
+                        />
+                        {friend.firstname} {friend.lastname}
+                    </Link>
+                    <button
+                        className="unfriend"
+                        onClick={() => this.props.dispatch(unfriend(friend.id))}
+                    >
+                        Unfriend
+                    </button>
                 </div>
             );
         }
