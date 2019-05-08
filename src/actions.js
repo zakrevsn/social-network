@@ -29,3 +29,21 @@ export function unfriend(id) {
         };
     });
 }
+export function onlineUsers(users) {
+    return {
+        type: "ONLINE_USERS",
+        users
+    };
+}
+export function userJoined(user) {
+    return {
+        type: "USER_JOINED",
+        user
+    };
+}
+export function userLeft(userId) {
+    return {
+        type: "USER_LEFT",
+        userId
+    };
+}

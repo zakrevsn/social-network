@@ -27,6 +27,11 @@ export default function reducer(state = {}, action) {
             friends: friends
         });
     }
+    if (action.type == "ONLINE_USERS") {
+        return Object.assign({}, state, {
+            onlineUsers: action.users
+        });
+    }
 
     return state;
 }

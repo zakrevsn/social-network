@@ -9,11 +9,15 @@ export function init(store) {
 
         socket.on("onlineUsers", users => {
             console.log(users);
-            // store.dispatch(onlineUsers(users));
+            store.dispatch(onlineUsers(users));
         });
 
-        socket.on("userJoined", user => {});
+        socket.on("userJoined", user => {
+            console.log("userJoined", user);
+        });
 
-        socket.on("userLeft", userId => {});
+        socket.on("userLeft", userId => {
+            console.log("userLeft", userId);
+        });
     }
 }

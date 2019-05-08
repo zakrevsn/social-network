@@ -282,32 +282,52 @@ let onlineUsers = [];
 io.on("connection", socket => {
     console.log(socket.request.session);
     console.log(`socket with the id ${socket.id} is now connected`);
+    if (!socket.request.session.userId) {
+        return;
+    }
     let found = false;
     for (let i in onlineUsers) {
-        if (onlineUsers[i].socketId == socket.id) {
+        if (
+            onlineUsers[i] &&
+            onlineUsers[i].userId == socket.request.session.userId
+        ) {
             found = true;
+            onlineUsers[i].socketId = socket.id;
         }
     }
     socket.emit("onlineUsers", onlineUsers);
 
+    socket.on("disconnect", function() {
+        let userId;
+        console.log(`socket with the id ${socket.id} is now disconnected`);
+        for (let i in onlineUsers) {
+            if (onlineUsers[i] && onlineUsers[i].socketId == socket.id) {
+                userId = onlineUsers[i].userId;
+                onlineUsers[i] = undefined;
+            }
+        }
+        if (userId) {
+            io.sockets.emit("userLeft", userId);
+        }
+    });
+
     if (found) {
         return;
     }
-    onlineUsers.push({
+    let user = {
         socketId: socket.id,
         userId: socket.request.session.userId,
         firstname: socket.request.session.firstname,
         lastname: socket.request.session.lastname,
         profilepic: socket.request.session.profilepic
-    });
+    };
+    onlineUsers.push(user);
+    console.log("broadcasting userJoined");
+    io.sockets.emit("userJoined", user);
 
     // socket.on("thanks", function(data) {
     //     console.log(data);
     // });
-
-    socket.on("disconnect", function() {
-        console.log(`socket with the id ${socket.id} is now disconnected`);
-    });
 });
 
 app.get("*", function(req, res) {

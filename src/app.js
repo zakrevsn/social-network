@@ -9,6 +9,7 @@ import { Route, BrowserRouter, Link } from "react-router-dom";
 import OtherProfile from "./otherprofile";
 import BioEditor from "./bioeditor";
 import Friends from "./friends";
+import OnlineUsers from "./onlineusers";
 export default class App extends React.Component {
     setProfilepic(url) {
         this.setState({ profilepic: url });
@@ -106,6 +107,7 @@ export default class App extends React.Component {
                         )}
                     />
                     <Route path="/friends" component={Friends} />
+                    <Route path="/online" component={OnlineUsers} />
                 </div>
             </BrowserRouter>
         );
