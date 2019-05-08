@@ -298,14 +298,17 @@ io.on("connection", socket => {
     socket.emit("onlineUsers", onlineUsers);
 
     socket.on("disconnect", function() {
-        let userId;
+        let userId,
+            newOnlineUsers = [];
         console.log(`socket with the id ${socket.id} is now disconnected`);
         for (let i in onlineUsers) {
             if (onlineUsers[i] && onlineUsers[i].socketId == socket.id) {
                 userId = onlineUsers[i].userId;
-                onlineUsers[i] = undefined;
+            } else if (onlineUsers[i]) {
+                newOnlineUsers.push(onlineUsers[i]);
             }
         }
+        onlineUsers = newOnlineUsers;
         if (userId) {
             io.sockets.emit("userLeft", userId);
         }
@@ -325,10 +328,24 @@ io.on("connection", socket => {
     console.log("broadcasting userJoined");
     io.sockets.emit("userJoined", user);
 
-    // socket.on("thanks", function(data) {
-    //     console.log(data);
-    // });
+    let chat = [];
+    socket.on("newChatMessage", data => {
+        let myNewChatObj = {
+            firstname: results.rows[0].firstname,
+            lastname: results.rows[0].lastname,
+            image: results.rows[0].image,
+            chat: data,
+            id: socket.request.session.userId,
+            timestamp: results.rows[0].timestamp
+        };
+        chat.push(myNewChatObj);
+    });
 });
+
+// make query to get from db firstname, lastname, pic etc. Not from users
+// JUST SELECT
+// NEXT STEP get user data from db to Redux + chat message in an object
+// it should look like other chat object in Redux
 
 app.get("*", function(req, res) {
     res.sendFile(__dirname + "/index.html");

@@ -1,5 +1,6 @@
 import * as io from "socket.io-client";
 import { onlineUsers, userJoined, userLeft } from "./actions";
+// import Chat from "./chat";
 
 export let socket;
 
@@ -14,10 +15,15 @@ export function init(store) {
 
         socket.on("userJoined", user => {
             console.log("userJoined", user);
+            store.dispatch(userJoined(user));
         });
 
         socket.on("userLeft", userId => {
             console.log("userLeft", userId);
+            store.dispatch(userLeft(userId));
         });
     }
+    // socket.broadcast("chatMessageForRedux", myNewChatObj => {
+    //     console.log(myNewChatObj);
+    // });
 }

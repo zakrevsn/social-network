@@ -32,6 +32,24 @@ export default function reducer(state = {}, action) {
             onlineUsers: action.users
         });
     }
+    if (action.type == "USER_JOINED") {
+        let onlineUsers = state.onlineUsers.slice();
+        onlineUsers.push(action.user);
+        return Object.assign({}, state, {
+            onlineUsers
+        });
+    }
+    if (action.type == "USER_LEFT") {
+        let onlineUsers = state.onlineUsers.slice();
+        for (let i in onlineUsers) {
+            if (onlineUsers[i] && onlineUsers[i].userId == action.userId) {
+                onlineUsers[i] = undefined;
+            }
+        }
+        return Object.assign({}, state, {
+            onlineUsers
+        });
+    }
 
     return state;
 }

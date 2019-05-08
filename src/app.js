@@ -10,6 +10,7 @@ import OtherProfile from "./otherprofile";
 import BioEditor from "./bioeditor";
 import Friends from "./friends";
 import OnlineUsers from "./onlineusers";
+import Chat from "./chat";
 export default class App extends React.Component {
     setProfilepic(url) {
         this.setState({ profilepic: url });
@@ -108,6 +109,7 @@ export default class App extends React.Component {
                     />
                     <Route path="/friends" component={Friends} />
                     <Route path="/online" component={OnlineUsers} />
+                    <Route path="/chat" component={Chat} />
                 </div>
             </BrowserRouter>
         );
