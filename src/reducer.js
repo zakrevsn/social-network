@@ -50,6 +50,13 @@ export default function reducer(state = {}, action) {
             onlineUsers
         });
     }
+    if (action.type == "MESSAGES") {
+        let chat = (state.chat && state.chat.slice()) || [];
+        chat = chat.concat(action.chat);
+        return Object.assign({}, state, {
+            chat
+        });
+    }
 
     return state;
 }

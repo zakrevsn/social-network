@@ -47,3 +47,9 @@ export function userLeft(userId) {
         userId
     };
 }
+export function messages(chat) {
+    return {
+        type: "MESSAGES",
+        chat
+    };
+}

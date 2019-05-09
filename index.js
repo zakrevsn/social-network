@@ -279,6 +279,7 @@ app.get("/friendship", (req, res) => {
 });
 
 let onlineUsers = [];
+let chat = [];
 io.on("connection", socket => {
     console.log(socket.request.session);
     console.log(`socket with the id ${socket.id} is now connected`);
@@ -328,17 +329,23 @@ io.on("connection", socket => {
     console.log("broadcasting userJoined");
     io.sockets.emit("userJoined", user);
 
-    let chat = [];
+    socket.emit("Message", chat);
+
     socket.on("newChatMessage", data => {
+        console.log("newChatMessage", data);
         let myNewChatObj = {
-            firstname: results.rows[0].firstname,
-            lastname: results.rows[0].lastname,
-            image: results.rows[0].image,
-            chat: data,
-            id: socket.request.session.userId,
-            timestamp: results.rows[0].timestamp
+            firstname: socket.request.session.firstname,
+            lastname: socket.request.session.lastname,
+            profilepic: socket.request.session.profilepic,
+            message: data,
+            userId: socket.request.session.userId,
+            timestamp: new Date().toJSON()
         };
         chat.push(myNewChatObj);
+        if (chat.length > 10) {
+            chat = chat.slice(chat.length - 10);
+        }
+        io.sockets.emit("Message", [myNewChatObj]);
     });
 });
 
