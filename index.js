@@ -349,11 +349,6 @@ io.on("connection", socket => {
     });
 });
 
-// make query to get from db firstname, lastname, pic etc. Not from users
-// JUST SELECT
-// NEXT STEP get user data from db to Redux + chat message in an object
-// it should look like other chat object in Redux
-
 app.get("*", function(req, res) {
     res.sendFile(__dirname + "/index.html");
 });

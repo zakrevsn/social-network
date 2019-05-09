@@ -4,7 +4,6 @@ import ProfilePic from "./profilepic";
 import Logo from "./start";
 import Uploader from "./uploader";
 import Profile from "./profile";
-// import BrowserRouter from "react";
 import { Route, BrowserRouter, Link } from "react-router-dom";
 import OtherProfile from "./otherprofile";
 import BioEditor from "./bioeditor";
@@ -52,6 +51,9 @@ export default class App extends React.Component {
                             <a href="/logout">Logout</a>
                             <a>
                                 <Link to="/friends">Friends</Link>
+                            </a>
+                            <a>
+                                <Link to="/chat">Chat</Link>
                             </a>
                             <a>
                                 <Link to="/">My profile</Link>

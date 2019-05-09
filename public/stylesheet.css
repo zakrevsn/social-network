@@ -151,7 +151,20 @@ input {
     display: flex;
     border-bottom: 10px solid rgba(205, 133, 63, 0.5);
 }
-
+.chatheader {
+    background-color: rgba(205, 133, 63, 0.5);
+}
+.chat-container {
+    background-color: rgba(192, 192, 192, 0.75);
+    border-bottom: 10px solid rgba(205, 133, 63, 0.5);
+}
+.messagetext {
+    background-color: rgba(176, 196, 222, 0.75);
+    font-size: 20px;
+}
+.message:nth-child(even) {
+    text-align: right;
+}
 @media screen and (max-width: 480px) {
     input {
         display: block;

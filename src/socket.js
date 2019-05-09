@@ -1,6 +1,5 @@
 import * as io from "socket.io-client";
 import { onlineUsers, userJoined, userLeft, messages } from "./actions";
-// import Chat from "./chat";
 
 export let socket;
 

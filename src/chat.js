@@ -7,7 +7,6 @@ import ProfilePic from "./profilepic";
 class Chat extends React.Component {
     constructor(props) {
         super(props);
-        // this.state = { chat: [] };
     }
     componentDidUpdate() {
         this.myDiv.scrollTop = this.myDiv.scrollHeight;
@@ -46,7 +45,7 @@ class Chat extends React.Component {
         }
         return (
             <div>
-                <h1>Chat!</h1>
+                <h1 className="chatheader">Our chat</h1>
                 <div className="chat-container">
                     <div
                         className="messages"
