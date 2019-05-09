@@ -56,6 +56,9 @@ export default class App extends React.Component {
                                 <Link to="/chat">Chat</Link>
                             </a>
                             <a>
+                                <Link to="/online">Users online</Link>
+                            </a>
+                            <a>
                                 <Link to="/">My profile</Link>
                             </a>
                         </div>

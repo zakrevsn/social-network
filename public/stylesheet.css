@@ -14,6 +14,9 @@ main {
     background-color: rgba(176, 196, 222, 0.75);
     border-bottom: 10px solid rgba(205, 133, 63, 0.5);
 }
+.top a {
+    font-size: 20px;
+}
 .links {
     display: flex;
     justify-content: space-between;
@@ -127,6 +130,8 @@ input {
 }
 .bio {
     height: 100px;
+    /* height: 150px;
+    width: 150px; */
     font-size: 30px;
     /* display: inline; */
 }
@@ -136,6 +141,14 @@ input {
 }
 .biotext {
     background-color: lightgrey;
+}
+.textfield {
+    height: 150px;
+    width: 250px;
+    font-size: 20px;
+}
+.save {
+    font-size: 20px;
 }
 .friendslist {
     display: flex;
@@ -164,6 +177,17 @@ input {
 }
 .message:nth-child(even) {
     text-align: right;
+}
+.chat-container textarea {
+    height: 150px;
+    width: 300px;
+    font-size: 20px;
+}
+.onlinelist {
+    background-color: rgba(176, 196, 222, 0.75);
+}
+.onlinelist p {
+    font-size: 25px;
 }
 @media screen and (max-width: 480px) {
     input {

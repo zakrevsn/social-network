@@ -29,8 +29,8 @@ class OnlineUsers extends React.Component {
             );
         }
         return (
-            <div className="friendslist">
-                These people are currently online
+            <div className="onlinelist">
+                <p>These people are currently online</p>
                 {users}
             </div>
         );
