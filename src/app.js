@@ -10,7 +10,8 @@ import BioEditor from "./bioeditor";
 import Friends from "./friends";
 import OnlineUsers from "./onlineusers";
 import Chat from "./chat";
-export default class App extends React.Component {
+import { connect } from "react-redux";
+class App extends React.Component {
     setProfilepic(url) {
         this.setState({ profilepic: url });
     }
@@ -50,7 +51,14 @@ export default class App extends React.Component {
                         <div className="links">
                             <a href="/logout">Logout</a>
                             <a>
-                                <Link to="/friends">Friends</Link>
+                                <Link to="/friends">
+                                    Friends{" "}
+                                    {this.props.requests
+                                        ? " (" +
+                                          this.props.requests +
+                                          " Requests)"
+                                        : ""}
+                                </Link>
                             </a>
                             <a>
                                 <Link to="/chat">Chat</Link>
@@ -120,3 +128,17 @@ export default class App extends React.Component {
         );
     }
 }
+const mapStateToProps = state => {
+    let requests = 0;
+    if (!state.friends) {
+        return { requests };
+    }
+    for (let i in state.friends) {
+        if (!state.friends[i].accepted) {
+            requests += 1;
+        }
+    }
+    return { requests };
+};
+
+export default connect(mapStateToProps)(App);
