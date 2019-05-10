@@ -29,19 +29,32 @@ class App extends React.Component {
         this.setProfilepic = this.setProfilepic.bind(this);
     }
     componentDidMount() {
-        axios.get("/user").then(({ data }) => {
-            this.setState(data);
-            console.log(data);
-        });
+        axios
+            .get("/user")
+            .then(({ data }) => {
+                if (!data.id) {
+                    this.setState({ failed: true });
+                }
+                this.setState(data);
+                console.log(data);
+            })
+            .catch(() => {
+                this.setState({ failed: true });
+            });
     }
     render() {
         if (!this.state.id) {
+            // if (this.state.failed) {
+            //     this.props.history.push("/welcome");
+            //     return;
+            // } else {
             return (
                 <div>
                     Hang on!
                     <img src="/spinner.gif" />
                 </div>
             );
+            // }
         }
         return (
             <BrowserRouter>

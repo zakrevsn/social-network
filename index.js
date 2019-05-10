@@ -11,7 +11,7 @@ const path = require("path");
 const config = require("./config");
 const server = require("http").Server(app);
 const io = require("socket.io")(server, {
-    origins: "localhost:8080 yourfunkychickenapp.herokuapp.com:*"
+    origins: "localhost:8080 the-secret-society.herokuapp.com:*"
 });
 
 const diskStorage = multer.diskStorage({
